@@ -57,7 +57,7 @@ export class UserService implements CanActivate {
   verifyUser() {
     let userFromDB = firebase.auth().currentUser;
     if(userFromDB) {
-      this.loggedInUser = new User(userFromDB.email, null, null);
+      this.loggedInUser = new User(userFromDB.email);
     }
 
     if(this.loggedInUser) {
