@@ -1,25 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../adminShared/user.service';
 import { Router } from '@angular/router';
+import {User} from "../adminShared/model/user.model";
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-  email: string;
-  password1: string;
+  user: User;
 
   constructor(private userService: UserService, private router: Router) {
   }
 
   ngOnInit(): void {
-    this.email = '';
-    this.password1 = '';
+    this.user = new User('', '', '');
   }
 
   login() {
-    this.userService.login(this.email, this.password1, () => this.userService.verifyUser());
+    this.userService.login(this.user.email, this.user.password, () => this.userService.verifyUser());
   }
 
   signUpFromLogin() {
@@ -30,3 +29,4 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['']);
   }
 }
+

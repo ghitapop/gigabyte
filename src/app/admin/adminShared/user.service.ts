@@ -6,14 +6,14 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import * as firebase from 'firebase';
-import {passBoolean} from "protractor/built/util";
+import {User} from "./model/user.model";
+
 
 
 @Injectable()
 export class UserService implements CanActivate {
   userLoggedIn: boolean = false;
-  loggedInUser: string;
-  authUser: any;
+  loggedInUser: User;
 
   constructor(private router: Router) {
     // Initialize Firebase
@@ -43,10 +43,11 @@ export class UserService implements CanActivate {
     return false;
   }
 
-  register(email: string, password: string) {
+  register(email: string, password: string, callback) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(userRecord){
-
+        console.log('Logged user: ' + userRecord.email);
+        callback();
       })
       .catch(function (error) {
         console.log(error.message);
@@ -54,11 +55,13 @@ export class UserService implements CanActivate {
   }
 
   verifyUser() {
-    this.authUser = firebase.auth().currentUser;
+    let userFromDB = firebase.auth().currentUser;
+    if(userFromDB) {
+      this.loggedInUser = new User(userFromDB.email, null, null);
+    }
 
-    if(this.authUser) {
-      console.log('Welcome' + this.authUser.email);
-      this.loggedInUser = this.authUser.email;
+    if(this.loggedInUser) {
+      console.log('Welcome' + this.loggedInUser.email);
       this.userLoggedIn = true;
       this.router.navigate(['/admin']);
     }

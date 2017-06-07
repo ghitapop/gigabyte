@@ -11,7 +11,7 @@
   <div *ngIf="theUser" class="top-bar-right">
     <ul class="menu">
       <li class="admin-menu"><a (click)="logout()">Logout</a></li>
-      <li class="admin-menu"><a>{{theUser}} Logged in</a></li>
+      <li class="admin-menu"><a>{{theUser.email}} Logged in</a></li>
     </ul>
   </div>
 </div>

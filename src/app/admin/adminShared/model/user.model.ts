@@ -1,6 +1,7 @@
-import {  } from '@angular/core';
-
 export class User {
-  email: string;
-
+  constructor(
+    public email: string,
+    public password: string,
+    public password1: string
+  ){}
 }
