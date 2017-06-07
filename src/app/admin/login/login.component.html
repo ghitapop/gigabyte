@@ -3,7 +3,7 @@
 </div>
 
 <div class="row align-center">
-  <form>
+  <form (ngSubmit)="login()" #userForm="ngForm">
     <div class="small-12 columns">
       <label>Username
         <input type="email" placeholder="Enter Email Address" id="email" name="email" [(ngModel)]="user.email" required #em="ngModel">
@@ -24,8 +24,8 @@
 
     <div class="small-12 columns">
       <div class="expanded button-group">
-        <a class="success button" (click)="login()">Login</a>
-        <a class="button" (click)="signUpFromLogin()">Sign Up</a>
+        <button type="submit" class="success button" [disabled]="!userForm.form.valid">Login</button>
+        <button class="button" (click)="signUpFromLogin()">Sign Up</button>
       </div>
     </div>
 
