@@ -6,7 +6,7 @@ import {
   RouterStateSnapshot
 } from '@angular/router';
 import * as firebase from 'firebase';
-import {User} from "./model/user.model";
+import {User} from "./model/user";
 
 
 
@@ -69,11 +69,11 @@ export class UserService implements CanActivate {
 
   login(loginEmail: string, loginPassword: string, callback){
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
-      .then(function(userRecord){
+      .then((userRecord) => {
         console.log('Logged user: ' + userRecord.email);
         callback();
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error.message);
       });
   }

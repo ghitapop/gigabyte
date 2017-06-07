@@ -9,6 +9,7 @@ import { AdminMenuComponent } from './adminMenu/admin-menu.component';
 
 import { AdminComponent } from './adminComponent/admin.component';
 import { UserService } from './adminShared/user.service';
+import {BlogAdminService} from "./adminShared/blog-admin.service";
 
 
 const AdminRoutes: Routes = [
@@ -39,7 +40,8 @@ const AdminRoutes: Routes = [
     AdminMenuComponent
   ],
   providers: [
-    UserService
+    UserService,
+    BlogAdminService
   ]
 })
 export class AdminModule { }
