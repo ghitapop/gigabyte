@@ -1,14 +1,27 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from '../adminShared/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
+  email: string;
+  password1: string
 
-  constructor() { }
+  constructor(private userService: UserService, private router: Router) { }
 
-  ngOnInit() {
+  login() {
+    this.userService.login(this.email, this.password1);
+    this.userService.verifyUser();
   }
 
+  signup() {
+    this.router.navigate(['/admin/signup']);
+  }
+
+  cancel() {
+    this.router.navigate(['']);
+  }
 }

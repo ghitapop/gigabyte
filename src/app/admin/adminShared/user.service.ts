@@ -34,7 +34,7 @@ export class UserService implements CanActivate {
   }
 
 
-  public verifyLogin(url: string) : boolean {
+  verifyLogin(url: string) : boolean {
     if(this.userLoggedIn) {
       return true;
     }
@@ -43,14 +43,14 @@ export class UserService implements CanActivate {
     return false;
   }
 
-  public register(email: string, password: string) {
+  register(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
         alert('${error.message} Please Try Again!');
       });
   }
 
-  public verifyUser() {
+  verifyUser() {
     this.authUser = firebase.auth().currentUser;
 
     if(this.authUser) {
@@ -61,14 +61,14 @@ export class UserService implements CanActivate {
     }
   }
 
-  public login(loginEmail: string, loginPassword: string) {
+  login(loginEmail: string, loginPassword: string) {
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
       .catch(function(error) {
         alert('${error.message} Unable to login. Try again!');
       });
   }
 
-  public logout() {
+  logout() {
     this.userLoggedIn = false;
     firebase.auth().signOut().then(function () {
       alert('Logged Out!')
