@@ -1,5 +1,6 @@
 import {  } from '@angular/core';
 
-export class Person {
+export class User {
+  email: string;
 
 }

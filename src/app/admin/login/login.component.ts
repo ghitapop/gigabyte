@@ -19,9 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.email);
-    this.userService.login(this.email, this.password1);
-    this.userService.verifyUser();
+    this.userService.login(this.email, this.password1, () => this.userService.verifyUser());
   }
 
   signUpFromLogin() {

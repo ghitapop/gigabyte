@@ -45,8 +45,11 @@ export class UserService implements CanActivate {
 
   register(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(function(userRecord){
+
+      })
       .catch(function (error) {
-        console.log('${error.message} Please Try Again!');
+        console.log(error.message);
       });
   }
 
@@ -54,27 +57,30 @@ export class UserService implements CanActivate {
     this.authUser = firebase.auth().currentUser;
 
     if(this.authUser) {
-      alert('Welcome ${this.authUser.email}');
+      console.log('Welcome' + this.authUser.email);
       this.loggedInUser = this.authUser.email;
       this.userLoggedIn = true;
       this.router.navigate(['/admin']);
     }
   }
 
-  login(loginEmail: string, loginPassword: string) {
-    console.log(loginEmail);
+  login(loginEmail: string, loginPassword: string, callback){
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
+      .then(function(userRecord){
+        console.log('Logged user: ' + userRecord.email);
+        callback();
+      })
       .catch(function(error) {
-        console.log('${error.message} Unable to login. Try again!');
+        console.log(error.message);
       });
   }
 
   logout() {
     this.userLoggedIn = false;
     firebase.auth().signOut().then(function () {
-      alert('Logged Out!')
+      console.log('Logged Out!')
     }, function (error) {
-      console.log('${error.message} Unable to logout. Try again!');
+      console.log(error.message);
     });
   }
 }
