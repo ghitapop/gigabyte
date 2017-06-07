@@ -6,22 +6,29 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   email: string;
-  password1: string
+  password1: string;
 
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) {
+  }
+
+  ngOnInit(): void {
+    this.email = '';
+    this.password1 = '';
+  }
 
   login() {
+    console.log(this.email);
     this.userService.login(this.email, this.password1);
     this.userService.verifyUser();
   }
 
-  signup() {
+  signUpFromLogin() {
     this.router.navigate(['/admin/signup']);
   }
 
-  cancel() {
+  cancelFromLogin() {
     this.router.navigate(['']);
   }
 }

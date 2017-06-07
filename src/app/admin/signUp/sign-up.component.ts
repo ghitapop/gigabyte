@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { UserService } from '../adminShared/user.service';
 import { Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ export class SignUpComponent {
   passwordFail: boolean = false;
 
   constructor(private userService: UserService, private router: Router) { }
+
 
   signUp() {
     if(this.password1 !== this.password2) {

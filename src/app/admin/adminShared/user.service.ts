@@ -46,7 +46,7 @@ export class UserService implements CanActivate {
   register(email: string, password: string) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(function (error) {
-        alert('${error.message} Please Try Again!');
+        console.log('${error.message} Please Try Again!');
       });
   }
 
@@ -62,9 +62,10 @@ export class UserService implements CanActivate {
   }
 
   login(loginEmail: string, loginPassword: string) {
+    console.log(loginEmail);
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
       .catch(function(error) {
-        alert('${error.message} Unable to login. Try again!');
+        console.log('${error.message} Unable to login. Try again!');
       });
   }
 
@@ -73,7 +74,7 @@ export class UserService implements CanActivate {
     firebase.auth().signOut().then(function () {
       alert('Logged Out!')
     }, function (error) {
-      alert('${error.message} Unable to logout. Try again!');
+      console.log('${error.message} Unable to logout. Try again!');
     });
   }
 }
