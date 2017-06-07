@@ -1,14 +1,14 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { AdminSharedService } from './user.service';
+import { UserService } from './user.service';
 
-describe('AdminSharedService', () => {
+describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [AdminSharedService]
+      providers: [UserService]
     });
   });
 
-  it('should ...', inject([AdminSharedService], (service: AdminSharedService) => {
+  it('should ...', inject([UserService], (service: UserService) => {
     expect(service).toBeTruthy();
   }));
 });
