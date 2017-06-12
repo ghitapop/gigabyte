@@ -1,0 +1,23 @@
+<div class="top-bar">
+  <div class="top-bar-title">GGC Admin area</div>
+
+  <div class="top-bar-left">
+    <ul class="menu">
+      <li class="admin-menu"><a (click)="chooseMode('add')">Add Post</a></li>
+      <li *ngIf="menuChoice" class="admin-menu"><a (click)="chooseMode('')">Manage Blog</a></li> 
+      <li [class]="admin-menu"><a [routerLink]="['/admin']">Back to Admin</a></li>     
+    </ul>
+  </div>
+
+  <div *ngIf="currentUser" class="top-bar-right">
+    <ul class="menu">
+      <li class="admin-menu"><a (click)="logout()">Logout</a></li>
+      <li class="admin-menu"><a>{{currentUser.email}} Logged In</a></li>
+    </ul>
+  </div>
+</div>
+
+<div [ngSwitch]="menuChoice">
+  <div *ngSwitchCase="'add'"><add-menu></add-menu></div>
+  <div *ngSwitchDefault><h1>Default</h1></div>
+</div>

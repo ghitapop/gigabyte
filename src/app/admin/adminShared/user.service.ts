@@ -43,7 +43,7 @@ export class UserService implements CanActivate {
     return false;
   }
 
-  register(email: string, password: string, callback) {
+  register(email: string, password: string, callback: any) {
     firebase.auth().createUserWithEmailAndPassword(email, password)
       .then(function(userRecord){
         console.log('Logged user: ' + userRecord.email);
@@ -67,7 +67,7 @@ export class UserService implements CanActivate {
     }
   }
 
-  login(loginEmail: string, loginPassword: string, callback){
+  login(loginEmail: string, loginPassword: string, callback: any){
     firebase.auth().signInWithEmailAndPassword(loginEmail, loginPassword)
       .then((userRecord) => {
         console.log('Logged user: ' + userRecord.email);
@@ -78,10 +78,11 @@ export class UserService implements CanActivate {
       });
   }
 
-  logout() {
+  logout(callback: any) {
     this.userLoggedIn = false;
     firebase.auth().signOut().then(function () {
       console.log('Logged Out!')
+      callback();
     }, function (error) {
       console.log(error.message);
     });

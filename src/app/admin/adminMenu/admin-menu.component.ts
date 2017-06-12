@@ -18,8 +18,7 @@ export class AdminMenuComponent implements OnInit {
   }
 
   logout() {
-    this.userService.logout();
-    this.router.navigate(['']);
+    this.userService.logout(()=> this.router.navigate(['']));    
   }
 
 }
