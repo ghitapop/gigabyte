@@ -3,15 +3,16 @@ import { CommonModule } from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
-import { SignUpComponent } from './signUp/sign-up.component';
-import { LoginComponent } from './login/login.component';
-import { AdminMenuComponent } from './adminMenu/admin-menu.component';
+import { SignUpComponent } from '../signUp/sign-up.component';
+import { LoginComponent } from '../login/login.component';
+import { AdminMenuComponent } from '../adminMenu/admin-menu.component';
 
-import { AdminComponent } from './adminComponent/admin.component';
-import { UserService } from './adminShared/user.service';
-import {BlogAdminService} from "./adminShared/blog-admin.service";
-import { BlogAdminComponent } from "./blogAdmin/blog-admin.component";
+import { AdminComponent } from '../adminComponent/admin.component';
+import { UserService } from './user.service';
+import {BlogAdminService} from "./blog-admin.service";
+import { BlogAdminComponent } from "../blogAdmin/blog-admin.component";
 import { BlogAddComponent } from "app/admin/blogAdd/blog-add.component";
+import {TruncatePipe} from './trunc.pipe';
 
 
 
@@ -35,7 +36,7 @@ const AdminRoutes: Routes = [
     RouterModule.forChild(AdminRoutes)
   ],
   exports: [
-    RouterModule
+    RouterModule, TruncatePipe
   ],
   declarations: [
     AdminComponent,
@@ -43,7 +44,8 @@ const AdminRoutes: Routes = [
     LoginComponent,
     AdminMenuComponent,
     BlogAdminComponent,
-    BlogAddComponent
+    BlogAddComponent,
+    TruncatePipe
   ],
   providers: [
     UserService,

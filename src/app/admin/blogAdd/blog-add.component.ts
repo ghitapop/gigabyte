@@ -37,7 +37,15 @@ export class BlogAddComponent {
             this.imageSrc.substring(23)
         );
 
-        this.blogAdminService.createPost(this.post, () => this.router.navigate(['/admin']));
+        let message = '';
+        this.blogAdminService.createPost(this.post, () => this.createPostCallback(message));
+    }
+
+    private createPostCallback(message: string) {
+      this.router.navigate(['/admin']).then(value => {
+        alert(message);
+      });
+
     }
 
     cancel() {

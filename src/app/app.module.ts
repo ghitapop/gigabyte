@@ -6,7 +6,7 @@ import { NavbarComponent } from './shared/navbar/navbar.component';
 import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { AppRoutingModule } from './shared/routes/app.routes';
-import { AdminModule } from './admin/admin.module';
+import { AdminModule } from './admin/adminShared/admin.module';
 
 @NgModule({
   declarations: [
