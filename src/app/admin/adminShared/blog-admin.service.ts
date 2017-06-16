@@ -24,6 +24,19 @@ export class BlogAdminService {
     return this.subject.asObservable();
   }
 
+  getPosts() {
+    let dbRef = firebase.database().ref('blogPosts/');
+    return Promise.resolve(dbRef.once('value')
+      .then((snapshot) => {
+        let tmp: string[] = snapshot.val();
+        let blogPosts = [];
+        if(tmp) {
+          blogPosts = Object.keys(tmp).map(key => tmp[key]);
+        }
+        return blogPosts;
+      }));
+  }
+
   createPost(createPost: Blog, callback: any) {
     let responseToSubmit: Response;
     let storageRef = firebase.storage().ref();

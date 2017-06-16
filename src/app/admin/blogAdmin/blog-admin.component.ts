@@ -42,14 +42,9 @@ export class BlogAdminComponent implements OnInit {
     }
 
     getPosts() {
-        let dbRef = firebase.database().ref('blogPosts/');
-        dbRef.once('value')
-            .then((snapshot) => {
-                let tmp: string[] = snapshot.val();
-                if(tmp) {
-                  this.blogPosts = Object.keys(tmp).map(key => tmp[key]);
-                }
-            });
+        this.blogAdminService.getPosts().then(items => {
+          this.blogPosts = items;
+        });
     }
 
     editPost(thePost: Blog) {
