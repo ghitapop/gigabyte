@@ -5,6 +5,7 @@ import { Blog } from '../adminShared/model/blog';
 import { UserService } from "../adminShared/user.service";
 import { BlogAdminService } from "../adminShared/blog-admin.service";
 import * as firebase from 'firebase';
+import {Response} from "../adminShared/model/response";
 
 
 @Component({
@@ -18,6 +19,8 @@ export class BlogAdminComponent implements OnInit {
     blogPosts: Blog[];
     formDisplay: boolean = true;
     singlePost: Blog;
+    displayMessage: boolean = false;
+    response: Response;
 
     constructor(
         private userService: UserService,
@@ -59,26 +62,33 @@ export class BlogAdminComponent implements OnInit {
     }
 
     updatePost(single: Blog) {
-      let message = '';
-      this.blogAdminService.editPost(single, this.updateCallback(message));
+      this.blogAdminService.editPost(single, this.updateCallback());
     }
 
-    private updateCallback(message: string) {
+    private updateCallback() {
       this.formDisplay = true;
-      alert(message);
+      this.subscribeMessage();
     }
 
     deletePost(single: Blog) {
       let verify = confirm('Are you sure you want to delete this post?');
       if(verify == true) {
-        let message = '';
-        this.blogAdminService.removePost(single, this.deletePostCallback(message));
+        this.blogAdminService.removePost(single, this.deletePostCallback());
       }
     }
 
-    private deletePostCallback(message: string) {
+    private deletePostCallback() {
       this.router.navigate(['/admin']).then(value => {
-        alert(message);
+        this.subscribeMessage();
+      });
+    }
+
+    private subscribeMessage() {
+      this.blogAdminService.getResponse().subscribe((response: Response) => {
+        if(response && response.message && response.message !== '') {
+          this.displayMessage = true;
+          this.response = response;
+        }
       });
     }
 }

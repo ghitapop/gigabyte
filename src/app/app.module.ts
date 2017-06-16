@@ -7,6 +7,8 @@ import { HomeComponent } from './home/home.component';
 import { ErrorComponent } from './error/error.component';
 import { AppRoutingModule } from './shared/routes/app.routes';
 import { AdminModule } from './admin/adminShared/admin.module';
+import {LoggerService} from "./shared/services/logger.service";
+import {Logger} from "angular2-logger/core";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,10 @@ import { AdminModule } from './admin/adminShared/admin.module';
     AdminModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [
+    LoggerService,
+    Logger
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

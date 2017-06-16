@@ -1,28 +1,46 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase';
 import {Blog} from "./model/blog";
+import {Subject} from "rxjs/Subject";
+import {Response} from "./model/response";
+import {Observable} from "rxjs/Observable";
+import { LoggerService } from '../../shared/services/logger.service';
+
 
 @Injectable()
 export class BlogAdminService {
 
-  constructor() { }
+  private response: Response;
+  private subject: Subject<Response> = new Subject<Response>();
+
+  constructor(private logger: LoggerService) { }
+
+  private setResponse(response: Response): void {
+    this.response = response;
+    this.subject.next(response);
+  }
+
+  getResponse(): Observable<Response> {
+    return this.subject.asObservable();
+  }
 
   createPost(createPost: Blog, callback: any) {
-    let message;
+    let responseToSubmit: Response;
     let storageRef = firebase.storage().ref();
     let imgKey = 'image/' + createPost.imgTitle;
     let uploadTask = storageRef.child(imgKey).putString(createPost.img, 'base64');
+    let self = this;
 
     uploadTask.on('state_changed', function(snapshot){
         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Upload is ' + progress + '% done');
+        self.logger.log.debug('Upload is ' + progress + '% done');
         switch (snapshot.state) {
           case firebase.storage.TaskState.PAUSED: // or 'paused'
-            console.log('Upload is paused');
+            self.logger.log.debug('Upload is paused');
             break;
           case firebase.storage.TaskState.RUNNING: // or 'running'
-            console.log('Upload is running');
+            self.logger.log.debug('Upload is running');
             break;
         }
     }, function(error) {
@@ -30,23 +48,26 @@ export class BlogAdminService {
         switch (error.name) {
           case 'storage/unauthorized':
             // User doesn't have permission to access the object
-            message = 'Unauthorized user';
-            console.log(message);
-            callback(message);
+            responseToSubmit = new Response('Unauthorized user', '500');
+            self.setResponse(responseToSubmit);
+            self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
+            callback();
             break;
 
           case 'storage/canceled':
             // User canceled the upload
-            message = 'User canceled the upload';
-            console.log(message);
-            callback(message);
+            responseToSubmit = new Response('User canceled the upload', '500');
+            self.setResponse(responseToSubmit);
+            self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
+            callback();
             break;
 
           case 'storage/unknown':
             // Unknown error occurred, inspect error.serverResponse
-            message = 'Unknown error!';
-            console.log('Unknown error! Error detail:' + error.message);
-            callback(message);
+            responseToSubmit = new Response('Unknown error', '500');
+            self.setResponse(responseToSubmit);
+            self.logger.log.error('Unknown error! Error detail:' + error.message, responseToSubmit.messageCode, error);
+            callback();
             break;
         }
     }, function() {
@@ -61,13 +82,18 @@ export class BlogAdminService {
           img: url,
           id: newPost.key
         });
-        message = createPost.title + ' was created into the Store';
-        callback(message);
+        responseToSubmit = new Response(createPost.title + ' was created into the Store', '200');
+        self.logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);
+        self.setResponse(responseToSubmit);
+        callback();
+
     });
   }
 
   editPost(updatePost: Blog, callback: any) {
-    let message;
+    let responseToSubmit: Response;
+    let self = this;
+
     let dbRef = firebase.database().ref('blogPosts/').child(updatePost.id)
       .update({
         title: updatePost.title,
@@ -75,35 +101,43 @@ export class BlogAdminService {
       });
       dbRef.then(()=> {
         //success
-        message = updatePost.imgTitle + ' was updated in the Store';
-        callback(message);
+        responseToSubmit = new Response(updatePost.imgTitle + ' was updated in the Store', '200');
+        self.setResponse(responseToSubmit);
+        self.logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);
+        callback();
       }, (error)=> {
         //error
-        console.log(error.message);
-        message = 'Error = Unable to update ' + updatePost.title;
-        callback(message);
+        responseToSubmit = new Response('Error = Unable to update ' + updatePost.title, '500');
+        self.setResponse(responseToSubmit);
+        self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
+        callback();
       });
   }
 
   removePost(deletePost: Blog, callback: any) {
+    let self = this;
+    let responseToSubmit: Response;
     let dbRef = firebase.database().ref('blogPosts/').child(deletePost.id).remove();
-    let message;
     dbRef.then(()=> {
       //success
       firebase.storage().ref().child('image/' + deletePost.imgTitle)
         .delete().then(()=> {
-            message = deletePost.title + ' and ' + deletePost.imgTitle + ' were deleted from Store';
-            callback(message);
+            responseToSubmit = new Response(deletePost.title + ' and ' + deletePost.imgTitle + ' were deleted from Store', '200');
+            self.setResponse(responseToSubmit);
+            self.logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);
+            callback();
         }).catch((error) => {
-            message = 'Error - Unable to delete ' + deletePost.imgTitle;
-            console.log(error.message);
-            callback(message);
+            responseToSubmit = new Response('Error - Unable to delete ' + deletePost.imgTitle, '500');
+            self.setResponse(responseToSubmit);
+            self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
+            callback();
         });
     }, (error)=> {
       //error
-      message = 'Error - Unable to delete ' + deletePost.title;
-      console.log(error.message);
-      callback(message);
+      responseToSubmit = new Response('Error - Unable to delete ' + deletePost.title, '500');
+      self.setResponse(responseToSubmit);
+      self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
+      callback();
     });
   }
 }
