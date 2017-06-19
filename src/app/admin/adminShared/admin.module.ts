@@ -10,8 +10,8 @@ import { AdminMenuComponent } from '../adminMenu/admin-menu.component';
 import { AdminComponent } from '../adminComponent/admin.component';
 import { UserService } from './user.service';
 import {BlogAdminService} from "./blog-admin.service";
-import { BlogAdminComponent } from "../blogAdmin/blog-admin.component";
-import { BlogAddComponent } from "app/admin/blogAdd/blog-add.component";
+import { BlogAdminComponent } from "../blog/blogAdmin/blog-admin.component";
+import { BlogAddComponent } from "app/admin/blog/blogAdd/blog-add.component";
 import {TruncatePipe} from './trunc.pipe';
 
 

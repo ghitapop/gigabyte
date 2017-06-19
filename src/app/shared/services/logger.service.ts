@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Logger} from "angular2-logger/core";
-import * as Config from '../../config/config';
+import * as Config from '../config/config';
 
 @Injectable()
 export class LoggerService {

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { User } from '../adminShared/model/user';
-import { Blog } from '../adminShared/model/blog';
-import { UserService } from "../adminShared/user.service";
-import { BlogAdminService } from "../adminShared/blog-admin.service";
-import * as firebase from 'firebase';
-import {Response} from "../adminShared/model/response";
+import { User } from '../../adminShared/model/user';
+import { Blog } from '../../adminShared/model/blog';
+import { UserService } from "../../adminShared/user.service";
+import { BlogAdminService } from "../../adminShared/blog-admin.service";
+import {Response} from "../../adminShared/model/response";
 
 
 @Component({
@@ -50,11 +49,11 @@ export class BlogAdminComponent implements OnInit {
             case '500':
                 this.response = response;
                 this.displayMessage = true;
-                break;    
-        
+                break;
+
             default:
                 break;
-        }  
+        }
       });
     }
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Blog } from "app/admin/adminShared/model/blog";
 import { Router } from "@angular/router";
 import { BlogAdminService } from "app/admin/adminShared/blog-admin.service";
-import {Response} from "../adminShared/model/response";
+import {Response} from "../../adminShared/model/response";
 
 @Component({
     selector: 'add-menu',
@@ -26,7 +26,7 @@ export class BlogAddComponent  implements OnInit {
 
         switch (response.messageCode) {
             case '200':
-                
+
                 this.response = response;
                 this.router.navigate(['/admin']);
                 break;
@@ -34,11 +34,11 @@ export class BlogAddComponent  implements OnInit {
             case '500':
                 this.response = response;
                 this.displayMessage = true;
-                break;    
-        
+                break;
+
             default:
                 break;
-        }  
+        }
       });
     }
 

@@ -3,3 +3,15 @@
 <div class="row expanded">
   <img class="hero" src="../../assets/images/computers.png">
 </div>
+
+<div class="row spacing">
+  <div *ngFor="let posts of blogPosts" class="medium-4 columns">
+    <div class="card text-center card-spacing">
+      <img class="disabled-image" [src]="posts.img">
+      <div class="card-section">
+        <h4 class="list-title" (click)="choosePost(posts)">{{posts.title}}</h4>
+        <p >{{posts.content | truncate:140}}</p>
+      </div>
+    </div>
+  </div>
+</div>
