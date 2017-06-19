@@ -4,6 +4,7 @@ export class Blog {
     public content: string,
     public imgTitle?: string,
     public img?: any,
-    public id?: string
+    public id?: string,
+    public imgKey?: string
   ){}
 }

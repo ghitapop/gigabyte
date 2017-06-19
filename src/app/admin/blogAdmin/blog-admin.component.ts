@@ -39,6 +39,23 @@ export class BlogAdminComponent implements OnInit {
     ngOnInit() {
         this.currentUser = this.userService.loggedInUser;
         this.getPosts();
+
+        this.blogAdminService.getResponse().subscribe((response: Response) => {
+        switch (response.messageCode) {
+            case '200':
+                this.response = response;
+                this.router.navigate(['/admin']);
+                break;
+
+            case '500':
+                this.response = response;
+                this.displayMessage = true;
+                break;    
+        
+            default:
+                break;
+        }  
+      });
     }
 
     getPosts() {
@@ -57,33 +74,13 @@ export class BlogAdminComponent implements OnInit {
     }
 
     updatePost(single: Blog) {
-      this.blogAdminService.editPost(single, this.updateCallback());
-    }
-
-    private updateCallback() {
-      this.formDisplay = true;
-      this.subscribeMessage();
+      this.blogAdminService.editPost(single);
     }
 
     deletePost(single: Blog) {
       let verify = confirm('Are you sure you want to delete this post?');
       if(verify == true) {
-        this.blogAdminService.removePost(single, this.deletePostCallback());
+        this.blogAdminService.removePost(single);
       }
-    }
-
-    private deletePostCallback() {
-      this.router.navigate(['/admin']).then(value => {
-        this.subscribeMessage();
-      });
-    }
-
-    private subscribeMessage() {
-      this.blogAdminService.getResponse().subscribe((response: Response) => {
-        if(response && response.message && response.message !== '') {
-          this.displayMessage = true;
-          this.response = response;
-        }
-      });
     }
 }

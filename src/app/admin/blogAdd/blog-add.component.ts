@@ -23,10 +23,22 @@ export class BlogAddComponent  implements OnInit {
 
     ngOnInit() {
       this.blogAdminService.getResponse().subscribe((response: Response) => {
-        if(response && response.message && response.message !== '') {
-          this.displayMessage = true;
-          this.response = response;
-        }
+
+        switch (response.messageCode) {
+            case '200':
+                
+                this.response = response;
+                this.router.navigate(['/admin']);
+                break;
+
+            case '500':
+                this.response = response;
+                this.displayMessage = true;
+                break;    
+        
+            default:
+                break;
+        }  
       });
     }
 
@@ -49,12 +61,7 @@ export class BlogAddComponent  implements OnInit {
             this.imageSrc.substring(23)
         );
 
-        this.blogAdminService.createPost(this.post, () => this.createPostCallback());
-    }
-
-    private createPostCallback() {
-      this.router.navigate(['/admin']).then(value => {
-      });
+        this.blogAdminService.createPost(this.post);
     }
 
     cancel() {
