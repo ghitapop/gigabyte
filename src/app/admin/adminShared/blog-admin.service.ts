@@ -42,13 +42,13 @@ export class BlogAdminService {
   createPost(createPost: Blog) {
     let self = this;
     let responseToSubmit: Response;
-      
+
     try {
       if(createPost.imgTitle !== '' && createPost.img !== '') {
         let storageRef = firebase.storage().ref();
-        let imgKey = 'image/' + createPost.imgTitle + '-' + self.util.generateUUID();
+        let imgKey = 'blog_images/' + createPost.imgTitle + '-' + self.util.generateUUID();
         let uploadTask = storageRef.child(imgKey).putString(createPost.img, 'base64');
-        
+
         uploadTask.on('state_changed', function(snapshot){
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -88,18 +88,18 @@ export class BlogAdminService {
         }, function() {
             // Handle successful uploads on complete
             let url = uploadTask.snapshot.downloadURL;
-            responseToSubmit = self.savePost(createPost, url, self.logger);          
+            responseToSubmit = self.savePost(createPost, url, self.logger);
             self.setResponse(responseToSubmit);
         });
       } else {
-        responseToSubmit = self.savePost(createPost, null, self.logger);          
+        responseToSubmit = self.savePost(createPost, null, self.logger);
         self.setResponse(responseToSubmit);
-        
-      }      
+
+      }
     } catch(error) {
       responseToSubmit = new Response('Unknown error! Error detail:' + error.message, '500');
       self.logger.log.error(responseToSubmit.message, responseToSubmit.messageCode, error);
-      self.setResponse(responseToSubmit);      
+      self.setResponse(responseToSubmit);
     }
   }
 
@@ -112,7 +112,7 @@ export class BlogAdminService {
       imgTitle: createPost.imgTitle,
       img: url,
       id: newPost.key
-    });    
+    });
     let responseToSubmit = new Response(createPost.title + ' was created into the Store', '200');
     logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);
     return responseToSubmit;
@@ -130,7 +130,7 @@ export class BlogAdminService {
         });
         dbRef.then(()=> {
           //success
-          responseToSubmit = new Response(updatePost.imgTitle + ' was updated in the Store', '200');
+          responseToSubmit = new Response(updatePost.title + ' was updated in the Store', '200');
           self.logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);
           self.setResponse(responseToSubmit);
         }, (error)=> {
@@ -153,7 +153,7 @@ export class BlogAdminService {
       let dbRef = firebase.database().ref('blogPosts/').child(deletePost.id).remove();
       dbRef.then(()=> {
         //success
-        firebase.storage().ref().child('image/' + deletePost.imgTitle)
+        firebase.storage().ref().child('blog_images/' + deletePost.imgTitle)
           .delete().then(()=> {
               responseToSubmit = new Response(deletePost.title + ' and ' + deletePost.imgTitle + ' were deleted from Store', '200');
               self.logger.log.debug(responseToSubmit.message, responseToSubmit.messageCode);

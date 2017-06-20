@@ -1,0 +1,103 @@
+<div class="top-bar">
+  <div class="top-bar-title">GGC Product Admin area</div>
+
+  <div class="top-bar-left">
+    <ul class="menu">
+      <li class="admin-menu"><a (click)="chooseMode('add')">Add Product</a></li>
+      <li *ngIf="menuChoice" class="admin-menu"><a (click)="chooseMode('')">Manage Products</a></li>
+      <li [class]="admin-menu"><a [routerLink]="['/admin']">Back to Admin</a></li>
+    </ul>
+  </div>
+
+  <div *ngIf="currentUser" class="top-bar-right">
+    <ul class="menu">
+      <li class="admin-menu"><a (click)="logout()">Logout</a></li>
+      <li class="admin-menu"><a>{{currentUser.email}} Logged In</a></li>
+    </ul>
+  </div>
+</div>
+
+<div [ngSwitch]="menuChoice">
+  <div *ngSwitchCase="'add'">
+    <product-menu></product-menu>
+  </div>
+  <div *ngSwitchDefault>
+    <div *ngIf="formDisplay" class="row">
+      <div class="row small-12" *ngFor="let product of products">
+        <div class="row spacer">
+          <div class="media-object">
+            <div class="media-object-section">
+              <div class="align-self-middle">
+                <img class="mini-img" [src]="product.img">
+              </div>
+            </div>
+            <div class="media-object-section main-section">
+              <h4>{{product.name}}</h4>
+              <p>{{product.description | truncate:140}}</p>
+              <p>{{product.price}}</p>
+              <div class="button-group align-center">
+                <button class="button" (click)="editProduct(product)">Edit</button>
+                <button class="button alert" (click)="deleteProduct(product)">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!formDisplay" class="row">
+      <form (ngSubmit)="updateProduct(singleProd)" #productForm="ngForm" class="small-12">
+        <div class="row">
+          <div class="small-12">
+            <h3>Edit Product</h3>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12">
+            <label>Product Name
+              <input type="text" [(ngModel)]="singleProd.name" name="editName" required #psName="ngModel">
+              <div [hidden]="psName.valid || psName.pristine" class="alert callout">
+                Product Name is required
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12">
+            <label>Price
+              <input type="text" [(ngModel)]="singleProd.price" name="editPrice" required #psPrice="ngModel">
+              <div [hidden]="psPrice.valid || psPrice.pristine" class="alert callout">
+                Price is required
+              </div>
+            </label>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="small-12 large-6">
+            <label>Product Description
+              <textarea rows="15" id="content" [(ngModel)]="singleProd.description" name="editDescription" required #psDesc="ngModel"></textarea>
+              <div [hidden]="psDesc.valid || psDesc.pristine" class="alert callout">
+                Product Description is required
+              </div>
+            </label>
+          </div>
+          <div class="large-6">
+            <img [src]="singleProd.img" alt="Image preview...">
+          </div>
+        </div>
+
+        <div class="row align-center">
+          <div class="small-12">
+            <div class="expanded button-group">
+              <button type="submit" class="button success" [disabled]="!productForm.form.valid">Update Product</button>
+              <button type="button" class="button cancel" (click)="cancelEdit()">Cancel Edit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

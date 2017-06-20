@@ -5,7 +5,7 @@ import { BlogAdminService } from "app/admin/adminShared/blog-admin.service";
 import {Response} from "../../adminShared/model/response";
 
 @Component({
-    selector: 'add-menu',
+    selector: 'blog-menu',
     templateUrl: './blog-add.component.html',
     styleUrls: ['./blog-add.component.scss']
 })

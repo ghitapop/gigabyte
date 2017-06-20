@@ -15,7 +15,7 @@
 
     <div class="row">
         <div class="small-12 medium-6 columns">
-            <label>
+            <label>Post Title
                 <input type="text" id="postTitle" [(ngModel)]="postTitle" name="postTitle" required #psTitle="ngModel">
                 <div [hidden]="psTitle.valid || psTitle.pristine" class="alert callout">
                     Blog Title is required
@@ -26,7 +26,7 @@
 
     <div class="row">
         <div class="small-12 medium-6 columns">
-            <label>
+            <label>Post Content
                 <textarea rows="15" id="content" [(ngModel)]="content" name="content" required #psContent="ngModel"></textarea>
                 <div [hidden]="psContent.valid || psContent.pristine" class="alert callout">
                     Blog Content is required
