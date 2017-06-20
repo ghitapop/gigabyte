@@ -9,13 +9,15 @@ import { AppRoutingModule } from './shared/routes/app.routes';
 import { AdminModule } from './admin/adminShared/admin.module';
 import {LoggerService} from "./shared/services/logger.service";
 import {Logger} from "angular2-logger/core";
+import {ShopComponent} from "./shop/shop.component";
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
-    ErrorComponent
+    ErrorComponent,
+    ShopComponent
   ],
   imports: [
     BrowserModule,
