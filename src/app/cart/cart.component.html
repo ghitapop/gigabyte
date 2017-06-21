@@ -1,0 +1,27 @@
+<app-navbar></app-navbar>
+
+<div class="row align-center">
+  <h1>Shopping Cart</h1>
+</div>
+
+<div *ngFor="let item of myCart">
+  <div class="row align-bottom cart">
+    <div class="medium-6 columns">{{item.name}}</div>
+    <div class="medium-3 columns">{{item.price}}</div>
+    <div class="medium-3 columns">
+      <button type="button" class="alert button" (click)="removeCart(item.id)">
+        Remove Item
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="row align-bottom space">
+  <div class="medium-1 medium-offset-6 columns cart">Total</div>
+  <div class="medium-5 cart">{{cartTotal | currency: 'USD':true}}</div>
+</div>
+
+<div class="expanded button-group space">
+  <button type="button" class="success button" (click)="purchase()" [disabled]="cartTotal === 0">Checkout</button>
+  <button type="button" class="alert button" (click)="cancel()">Cancel</button>
+</div>

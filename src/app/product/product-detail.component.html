@@ -2,10 +2,21 @@
   <img [src]="singleProd?.img">
 </div>
 
+<div class="row text-left" *ngIf="displayMessage">
+  <div class="alert alert-success">
+    <h4>The Item was added to the Cart. </h4>
+  </div>
+</div>
+
 <div class="row">
   <div class="column text-left">
     <a class="back-link" [routerLink]="['/shop']">
       <h4>Go Back</h4>
+    </a>
+  </div>
+  <div class="column text-right">
+    <a (click)="addProduct(singleProd.id, singleProd.name, singleProd.price)">
+      <h4>Add to Cart</h4>
     </a>
   </div>
 </div>

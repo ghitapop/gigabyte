@@ -10,7 +10,7 @@
       <img class="disabled-image" [src]="product.img">
       <div class="card-section">
         <h4 class="list-title" (click)="chooseProduct(product)">{{product.name}}</h4>
-        <p>$ {{product.price}}</p>
+        <p>{{product.price | currency: 'USD':true}}</p>
         <p>{{product.description | truncate:140}}</p>
       </div>
     </div>

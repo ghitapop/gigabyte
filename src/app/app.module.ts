@@ -10,6 +10,8 @@ import { AdminModule } from './admin/adminShared/admin.module';
 import {LoggerService} from "./shared/services/logger.service";
 import {Logger} from "angular2-logger/core";
 import {ShopComponent} from "./shop/shop.component";
+import {ShoppingCartService} from "./shared/services/shopping-cart.service";
+import { CartComponent } from './cart/cart.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import {ShopComponent} from "./shop/shop.component";
     NavbarComponent,
     HomeComponent,
     ErrorComponent,
-    ShopComponent
+    ShopComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +29,8 @@ import {ShopComponent} from "./shop/shop.component";
   ],
   providers: [
     LoggerService,
-    Logger
+    Logger,
+    ShoppingCartService
   ],
   bootstrap: [AppComponent]
 })

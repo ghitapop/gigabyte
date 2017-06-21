@@ -42,7 +42,7 @@
     <div class="row align-center">
         <div class="small-12 medium-6 columns">
             <div class="expanded button-group">
-                <button class="success button" type="submit" [disabled]="!psTitle.valid || !psContent.valid">Create Post</button>
+                <button class="success button" type="submit" [disabled]="!blogAddForm.form.valid">Create Post</button>
                 <button class="cancel button" type="button" (click)="cancel()">Cancel</button>
             </div>
         </div>
