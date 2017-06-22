@@ -29,8 +29,7 @@ export class CartComponent implements OnInit {
   }
 
   purchase() {
-    alert("Your Order Totaled: " + this.cartTotal);
-    this.router.navigate(['/shop']);
+    this.router.navigate(['/payment']);
   }
 
   cancel() {

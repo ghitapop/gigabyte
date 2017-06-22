@@ -9,10 +9,12 @@ import {ShopComponent} from "../../shop/shop.component";
 import {ProductDetailComponent} from "../../product/product-detail.component";
 import {CartComponent} from "../../cart/cart.component";
 import {CommonModule} from "@angular/common";
+import {PaymentComponent} from "../../payment/payment.component";
 
 @NgModule({
   imports: [
     RouterModule.forRoot([
+      { path: 'payment', component: PaymentComponent},
       { path: 'cart', component: CartComponent},
       { path: 'product/:id', component: ProductDetailComponent},
       { path: 'shop', component: ShopComponent},

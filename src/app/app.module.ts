@@ -14,6 +14,7 @@ import {ShoppingCartService} from "./shared/services/shopping-cart.service";
 import { CartComponent } from './cart/cart.component';
 import {BlogDetailComponent} from "./blog/blog-detail.component";
 import {ProductDetailComponent} from "./product/product-detail.component";
+import { PaymentComponent } from './payment/payment.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {ProductDetailComponent} from "./product/product-detail.component";
     ShopComponent,
     CartComponent,
     BlogDetailComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    PaymentComponent
   ],
   imports: [
     BrowserModule,
