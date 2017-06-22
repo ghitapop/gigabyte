@@ -1,9 +1,11 @@
+<app-navbar></app-navbar>
+
 <div class="row image-spacing">
   <img [src]="singleProd?.img">
 </div>
 
 <div class="row text-left" *ngIf="displayMessage">
-  <div class="alert alert-success">
+  <div class="success-message">
     <h4>The Item was added to the Cart. </h4>
   </div>
 </div>

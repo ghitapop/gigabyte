@@ -12,6 +12,8 @@ import {Logger} from "angular2-logger/core";
 import {ShopComponent} from "./shop/shop.component";
 import {ShoppingCartService} from "./shared/services/shopping-cart.service";
 import { CartComponent } from './cart/cart.component';
+import {BlogDetailComponent} from "./blog/blog-detail.component";
+import {ProductDetailComponent} from "./product/product-detail.component";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { CartComponent } from './cart/cart.component';
     HomeComponent,
     ErrorComponent,
     ShopComponent,
-    CartComponent
+    CartComponent,
+    BlogDetailComponent,
+    ProductDetailComponent
   ],
   imports: [
     BrowserModule,

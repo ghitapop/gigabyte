@@ -26,8 +26,6 @@ import {CommonModule} from "@angular/common";
     RouterModule
   ],
   declarations: [
-    BlogDetailComponent,
-    ProductDetailComponent
   ],
   providers: [
     CommonService
